@@ -1,8 +1,7 @@
 rm (list =  ls(all = T))
 
-source(file = ".\\Funzioni\\fixcovid19.r")
+source(file = "./Funzioni/fixcovid19.r")
 set.seed('123')
-unzip("./DATA_THESIS.zip")
 
 # variable
 seasons             <- c('201830', '201930', '202030', '202130')
@@ -15,7 +14,7 @@ threshold_alignment <- 100000
 n_week_euclidean    <- 3
 
 
-df_sku <- read_csv2(".\\DATA_THESIS.csv")
+df_sku <- read_csv2("./DATA_THESIS.zip")
 df_sku$season <- as.character(df_sku$season)
 backup_df <- df_sku
 
@@ -43,4 +42,4 @@ plot_current(backup_df, current_dates_iter, 'Curve giornaliere ordinato - non al
 plot_current_week(df_sku, current_dates_iter, 'Curve settimanali ordinato - allineate')
 plot_current_week(backup_df, current_dates_iter, 'Curve settimanali ordinato - non allineate')
 
-rm("./DATA_THESIS.csv")
+rm(list = ls())
