@@ -42,4 +42,7 @@ plot_current(backup_df, current_dates_iter, 'Curve giornaliere ordinato - non al
 plot_current_week(df_sku, current_dates_iter, 'Curve settimanali ordinato - allineate')
 plot_current_week(backup_df, current_dates_iter, 'Curve settimanali ordinato - non allineate')
 
+plot_weight(weight)
+
+
 rm(list = ls())

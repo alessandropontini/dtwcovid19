@@ -6,6 +6,7 @@ require(readr)
 require(lubridate)
 require(ggplot2)
 require(dtw)
+require(formattable)
 options(dplyr.summarise.inform = FALSE)
 
 #' Prepare Dataframe
@@ -690,4 +691,20 @@ plot_current_week <- function(data, current_dates, title){
          y = "Quantita' comulata di ordini")
 
   print(gg)
+}
+
+plot_weight <- function(weight){
+  name_weight <- names(weight)
+  numb_weight <- c(weight[[1]],weight[[2]],weight[[3]])
+
+  df <- data.frame(
+    season = name_weight,
+    weight = numb_weight)
+
+  formattable(df, list(
+    Season = color_tile("white", "orange"),
+    grade = formatter("span", style = x ~ ifelse(x == "A",
+                                                 style(color = "green", font.weight = "bold"), NA)),
+    area(col = weight) ~ normalize_bar("pink", 0.2)
+  ))
 }
