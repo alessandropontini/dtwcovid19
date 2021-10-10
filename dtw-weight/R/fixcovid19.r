@@ -519,6 +519,21 @@ create_weight <- function(data, season_target, seasons, n_week_euclidean, weight
     weight_vector[which.max(weight_vector)] <- max(weight_vector) - more
   }
 
+  # check the weight vector be 1
+  if(sum(weight_vector) < 1){
+    
+    # if less than 1 calculate the difference from min and give to the difference to the min value
+    #  weight_vector[which.min(weight_vector)] <- min(weight_vector) + (1-sum(round(weight_vector,1)))
+    less <- 1-sum(weight_vector)
+    weight_vector[which.max(weight_vector)] <- max(weight_vector) + less
+    
+  } else if(sum(weight_vector) > 1){
+    
+    # if more than 1 calculate the difference  between the max value and the difference nb. check it is no negative max(function)
+    #  weight_vector[which.min(weight_vector)] <- min(0, min(weight_vector) + (1-sum(round(weight_vector,1))))
+    more <- sum(weight_vector) - 1
+    weight_vector[which.max(weight_vector)] <- max(weight_vector) - more
+  }
   # 4. warnings and errors --------------------------------------------------
   #weight_vector <- weight_vector %>% round(1)
 
