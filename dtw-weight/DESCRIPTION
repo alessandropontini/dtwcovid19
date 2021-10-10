@@ -8,17 +8,16 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
 Imports:
-    dplyr      (>= 0.8.1),
-    EnvStats   (>= 2.3.1),
-    evd        (>= 2.3-3),
-    ggplot2    (>= 3.2.0),
-    lubridate  (>= 1.7.4),
-    magrittr   (>= 1.5),
-    purrr      (>= 0.3.3),
-    rlang      (>= 0.3.4),
-    tidyr      (>= 0.8.3),
-    readr      (>= 1.4.0),
-    dtw        (>= 1.22-3)
+    dplyr,
+    EnvStats,
+    evd,
+    ggplot2,
+    lubridate,
+    tidyr,
+    formattable,
+    tidyr,
+    readr,
+    dtw
 Suggests: 
     knitr,
     rmarkdown

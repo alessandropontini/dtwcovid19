@@ -1,12 +1,3 @@
-if (!require(ggplot2)) install.packages('ggplot2'); library('ggplot2')
-if (!require(dplyr, warn.conflicts = FALSE)) install.packages('dplyr'); library('dplyr')
-if (!require(dtw)) install.packages('dtw'); library('dtw')
-if (!require(formattable)) install.packages('formattable'); library('formattable')
-if (!require(readr)) install.packages('readr'); library('readr')
-if (!require(tidyr)) install.packages('tidyr'); library('tidyr')
-if (!require(lubridate)) install.packages('lubridate'); library('lubridate')
-options(dplyr.summarise.inform = FALSE)
-
 #' Prepare Dataframe
 #'
 #' @description This functions transform daily SKU orders by wholesaler in weekly data.
@@ -624,7 +615,7 @@ create_dynamic_weight <- function(data, season_target, seasons, current_dates, n
 #' }
 #'
 #' @importFrom dplyr %>%  group_by mutate summarise arrange ungroup
-#' @importFrom ggplot geom_line labs ylim
+#' @importFrom ggplot2 geom_line labs ylim
 #'
 #' @return The output is a plot.
 #' @export
