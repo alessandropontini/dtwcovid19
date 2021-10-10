@@ -1,12 +1,10 @@
-require(dplyr, warn.conflicts = FALSE)
-require(tidyr)
-require(purrr)
-require(furrr)
-require(readr)
-require(lubridate)
-require(ggplot2)
-require(dtw)
-require(formattable)
+if (!require(ggplot2)) install.packages('ggplot2'); library('ggplot2')
+if (!require(dplyr, warn.conflicts = FALSE)) install.packages('dplyr'); library('dplyr')
+if (!require(dtw)) install.packages('dtw'); library('dtw')
+if (!require(formattable)) install.packages('formattable'); library('formattable')
+if (!require(readr)) install.packages('readr'); library('readr')
+if (!require(tidyr)) install.packages('tidyr'); library('tidyr')
+if (!require(lubridate)) install.packages('lubridate'); library('lubridate')
 options(dplyr.summarise.inform = FALSE)
 
 #' Prepare Dataframe
@@ -643,7 +641,7 @@ plot_current <- function(data, current_dates, title){
   data <- data %>% group_by(season) %>%
     mutate(percentuale = qty/sum(qty))
 
-  data <- data %>% filter(day_count<=current_dates_iter)
+  data <- data %>% filter(day_count<=current_dates)
 
   gg <- ggplot(data, aes(x = day_count,
                          y = qty_cumsum,
@@ -678,7 +676,7 @@ plot_current_week <- function(data, current_dates, title){
     mutate(qty_cumsum = cumsum(qty))%>%
     ungroup()
 
-  data <- data %>% filter(week_count<=ceiling(current_dates_iter/7))
+  data <- data %>% filter(week_count<=ceiling(current_dates/7))
 
   gg <- ggplot(data, aes(x = week_count,
                          y = qty_cumsum,
@@ -707,4 +705,35 @@ plot_weight <- function(weight){
                                                  style(color = "green", font.weight = "bold"), NA)),
     area(col = weight) ~ normalize_bar("pink", 0.2)
   ))
+}
+
+plot_current2 <- function(data, current_dates, title){
+  #data <- df_sku
+  data <- data %>%
+    mutate(day_count = as.numeric(date - end, "days")) %>%
+    group_by(season, day_count) %>%
+    summarise(qty = sum(qty)) %>%
+    arrange(season, day_count) %>%
+    ungroup()
+
+  data <- data %>% group_by(season) %>%
+    mutate(qty_cumsum = cumsum(qty))%>%
+    ungroup()
+
+  data <- data %>% group_by(season) %>%
+    mutate(percentuale = qty/sum(qty))
+
+  data <- data %>% filter(day_count<=0)
+
+  gg <- ggplot(data, aes(x = day_count,
+                         y = qty_cumsum,
+                         color=season)) +
+    geom_line() +
+    labs(title = title,
+         #subtitle = "subtitle: il sottotitolo",
+         #caption = "caption: didascalia (ad es.: \"dati: cars\")",
+         x = "Giorni fine campagna",
+         y = "Quantita' comulata di ordini")
+
+  print(gg)
 }
