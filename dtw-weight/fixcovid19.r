@@ -63,20 +63,6 @@ prepare_data_weekly <- function(data, season_target, seasons){
 
   }
 
-  # USELESS NOW I HAVE ALL DATES
-  # data <- data %>% drop_na(end)
-
-  # this modification of 202130 is to get transform the end of 202130 in 2020-07-24 DONE BEFORE
-  # if(season_target == "202130"){
-  #
-  #   data_ref <- data %>% filter(season == season_target)
-  #   data <- data %>% filter(season != season_target)
-  #
-  #   data_ref <- data_ref %>% mutate(end = case_when(season == season_target ~ as.Date.character("2020-07-24")))
-  #   data <- data %>% bind_rows(data_ref)
-  #
-  # }
-
   # convert data in week
   data <- data %>%
     mutate(week_count = ceiling(as.numeric(date - end, "days")/7)) %>%
@@ -588,17 +574,10 @@ create_weight <- function(data, season_target, seasons, n_week_euclidean, weight
 #' @details The input \code{data} has to be a dataframe (or a tibble) with at least the following columns:
 #'
 #' \describe{
-#'   \item{client}{\code{character}. Clients Names}
 #'   \item{date}{\code{Date}. Date of the order}
 #'   \item{order}{\code{character}. Code of the order}
-#'   \item{start}{\code{Date}. Start date of the campaign}
 #'   \item{end}{\code{Date}. End date of the campaign}
 #'   \item{season}{\code{character}. Code of the season}
-#'   \item{gender_3bs}{\code{character}. Details for man or women}
-#'   \item{category}{\code{character}. Details of the different types of category}
-#'   \item{style_code}{\code{character}. Code of the style}
-#'   \item{fabric_code}{\code{character}. Code of the fabric}
-#'   \item{color_code}{\code{character}. Code of the color}
 #'   \item{qty}{\code{numeric}. Quantity of the order}
 #' }
 #'
@@ -625,8 +604,33 @@ create_dynamic_weight <- function(data, season_target, seasons, current_dates, n
   return(weight_list)
 }
 
-plot_current <- function(data, current_dates, title){
-  #data <- df_sku
+#' Plot Imagines
+#'
+#' This function take all the season and plot them.
+#'
+#' @param data              Dataframe. See \code{details}
+#' @param current_dates     Numeric Vector. Dates in which you want to launch the simulation. Preferable more than one.
+#' @param season_target     Character. Target Season.
+#' @param flag_allineamento Boolean. This flag decide if we show alignment or no
+#'
+#' @details The input \code{data} has to be a dataframe (or a tibble) with at least the following columns:
+#'
+#' \describe{
+#'   \item{date}{\code{Date}. Date of the order}
+#'   \item{order}{\code{character}. Code of the order}
+#'   \item{end}{\code{Date}. End date of the campaign}
+#'   \item{season}{\code{character}. Code of the season}
+#'   \item{qty}{\code{numeric}. Quantity of the order}
+#' }
+#'
+#' @importFrom dplyr %>%  group_by mutate summarise arrange ungroup
+#' @importFrom ggplot geom_line labs ylim
+#'
+#' @return The output is a plot.
+#' @export
+#'
+plot_current <- function(data, current_dates,target,flag_allineamento){
+
   data <- data %>%
     mutate(day_count = as.numeric(date - end, "days")) %>%
     group_by(season, day_count) %>%
@@ -643,54 +647,42 @@ plot_current <- function(data, current_dates, title){
 
   data <- data %>% filter(day_count<=current_dates)
 
-  gg <- ggplot(data, aes(x = day_count,
-                         y = qty_cumsum,
-                         color=season)) +
-    geom_line() +
-    labs(title = title,
-         #subtitle = "subtitle: il sottotitolo",
-         #caption = "caption: didascalia (ad es.: \"dati: cars\")",
-         x = "Giorni fine campagna",
-         y = "Quantita' comulata di ordini")
+  if(flag_allineamento) {
 
-  print(gg)
+    gg <- ggplot(data, aes(x = day_count,
+                           y = qty_cumsum,
+                           color=season)) +
+      geom_line() +
+      labs(x = "Giorni fine campagna",
+           y = "Quantita' comulata di ordini")
+
+    print(gg)
+
+  } else {
+
+    gg <- ggplot(data, aes(x = day_count,
+                           y = qty_cumsum,
+                           color=season)) +
+      geom_line() +
+      labs(x = "Giorni fine campagna",
+           y = "Quantita' comulata di ordini")
+
+    print(gg)
+  }
+
 }
 
-plot_current_week <- function(data, current_dates, title){
-
-  #data <- df_sku
-  data <- data %>%
-    mutate(week_count = ceiling(as.numeric(date - end, "days")/7)) %>%
-    group_by(season, week_count) %>%
-    summarise(qty = sum(qty)) %>%
-    arrange(season, week_count) %>%
-    ungroup()
-
-  # complete from start
-  data <- data %>%
-    complete(season, week_count, fill = list(qty = 0))
-
-  # create comulative sum
-  data <- data %>% arrange(season, week_count) %>%
-    group_by(season) %>%
-    mutate(qty_cumsum = cumsum(qty))%>%
-    ungroup()
-
-  data <- data %>% filter(week_count<=ceiling(current_dates/7))
-
-  gg <- ggplot(data, aes(x = week_count,
-                         y = qty_cumsum,
-                         color=season)) +
-    geom_line() +
-    labs(title = title,
-         #subtitle = "subtitle: il sottotitolo",
-         #caption = "caption: didascalia (ad es.: \"dati: cars\")",
-         x = "Settimane fine campagna",
-         y = "Quantita' comulata di ordini")
-
-  print(gg)
-}
-
+#' Plot Table Weights
+#'
+#' This function take all the season and plot them.
+#'
+#' @param weight Vector. This is the vector of weights,
+#'
+#' @importFrom formattable formattable
+#'
+#' @return The output is a plot.
+#' @export
+#'
 plot_weight <- function(weight){
   name_weight <- names(weight)
   numb_weight <- c(weight[[1]],weight[[2]],weight[[3]])
@@ -705,35 +697,4 @@ plot_weight <- function(weight){
                                                  style(color = "green", font.weight = "bold"), NA)),
     area(col = weight) ~ normalize_bar("pink", 0.2)
   ))
-}
-
-plot_current2 <- function(data, current_dates, title){
-  #data <- df_sku
-  data <- data %>%
-    mutate(day_count = as.numeric(date - end, "days")) %>%
-    group_by(season, day_count) %>%
-    summarise(qty = sum(qty)) %>%
-    arrange(season, day_count) %>%
-    ungroup()
-
-  data <- data %>% group_by(season) %>%
-    mutate(qty_cumsum = cumsum(qty))%>%
-    ungroup()
-
-  data <- data %>% group_by(season) %>%
-    mutate(percentuale = qty/sum(qty))
-
-  data <- data %>% filter(day_count<=0)
-
-  gg <- ggplot(data, aes(x = day_count,
-                         y = qty_cumsum,
-                         color=season)) +
-    geom_line() +
-    labs(title = title,
-         #subtitle = "subtitle: il sottotitolo",
-         #caption = "caption: didascalia (ad es.: \"dati: cars\")",
-         x = "Giorni fine campagna",
-         y = "Quantita' comulata di ordini")
-
-  print(gg)
 }
