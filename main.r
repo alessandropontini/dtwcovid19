@@ -23,8 +23,8 @@ names(weight)       <- c('201830', '201930', '202130')
 weight              <- weight %>% unlist()
 
 # Parametri da modificare, consiglio di modificare le current_dates con i valorei -28, -21, -14, -7, 0
-current_dates       <- 0
-threshold_alignment <- 50000
+current_dates       <- -7
+threshold_alignment <- 100000
 n_week_euclidean    <- 3
 
 
