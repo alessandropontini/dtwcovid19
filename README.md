@@ -7,6 +7,7 @@
 - [Introduzione](#Introduzione)
 - [Come Installare ed Eseguire](#come-installare-ed-eseguire)
 - [Ringraziamenti](#ringraziamenti)
+- [Utilizzo](#utilizzo)
 
 ## Introduzione
 Il 2021 è stato un anno che ha messo in discussione l'efficacia di molti modelli predittivi. Questo fenomeno è dovuto alla pandemia globale che si è scatenata a causa del virus Covid-19. Il mio progetto si colloca in una serie di patch per cui per ovviare ai problemi dovuti al covid-19 si è voluto utilizzare l'algoritmo del Dynamic Time Warping per allineare le curve di analisi. Questo script permette all'utente di eseguire l'allineamento ed al variare dei parametri come cambia questo. Inoltre sempre a livello di progetto è stato implementato un sistema di pesistica che alloca dinamicamente valore alle stagioni passate.
