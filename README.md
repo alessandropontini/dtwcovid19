@@ -17,7 +17,9 @@ Per installarlo bisogna avere installato R e l'IDE R-studio. Una volta completat
 
 ### Primo metodo consigliato
 - Dentro la repository si trova una cartella con il formato tar.gz. contenente il pacchetto già pronto.
-- Basta prenderela ed eseguire una installazione con il comando da R: install.packages(path_to_file, repos = NULL, type="source"). Più informazioni si possono trovare a questo link: https://stackoverflow.com/questions/1474081/how-do-i-install-an-r-package-from-source
+- Basta prenderela ed eseguire una installazione con il comando da R 
+- ```R install.packages(path_to_file, repos = NULL, type="source") ```
+- Più informazioni si possono trovare a questo link: https://stackoverflow.com/questions/1474081/how-do-i-install-an-r-package-from-source
 
 ### Secondo metodo non consigliato
 - E' possibile crearsi il proprio pacchetto direttamente da R-Studio
