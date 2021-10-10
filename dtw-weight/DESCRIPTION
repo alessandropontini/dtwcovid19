@@ -1,32 +1,25 @@
-Package: dtw-weight
+Package: dtwweight
 Title: Alignment with Dynamic Time Warping and Dynamic Weights
 Version: 1.0.0.0
-Authors@R: c(person("Alessandro" , "Oliveri", email = "a.pontini1@unimib.campus.com" , role = c("aut", "cre")))
+Authors@R: c(person("Alessandro" , "Pontini", email = "a.pontini1@unimib.campus.com" , role = c("aut", "cre")))
 Description: The package show the dtw alignment and the weights dynamic created
 License: Private
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Imports:
-    dplyr      (== 0.8.1),
-    EnvStats   (== 2.3.1),
-    evd        (== 2.3-3),
-    furrr      (== 0.1.0),
-    future     (== 1.13.0),
-    ggplot2    (== 3.2.0),
-    gridExtra  (== 2.3),
-    lubridate  (== 1.7.4),
-    magrittr   (== 1.5),
-    purrr      (== 0.3.3),
-    pyramid    (== 1.0.0),
+    dplyr      (>= 0.8.1),
+    EnvStats   (>= 2.3.1),
+    evd        (>= 2.3-3),
+    ggplot2    (>= 3.2.0),
+    lubridate  (>= 1.7.4),
+    magrittr   (>= 1.5),
+    purrr      (>= 0.3.3),
     rlang      (>= 0.3.4),
-    tidyr      (== 0.8.3),
-    tidyselect (== 0.2.5),
-    stringr    (== 1.4.0),
-    dtw        (== 1.22-3)
+    tidyr      (>= 0.8.3),
+    readr      (>= 1.4.0),
+    dtw        (>= 1.22-3)
 Suggests: 
     knitr,
-    rmarkdown,
-    testthat,
-    readr     (== 1.4.0)
+    rmarkdown
 VignetteBuilder: knitr

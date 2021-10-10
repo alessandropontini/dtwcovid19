@@ -1,6 +1,7 @@
 rm (list =  ls(all = T))
 
-source(file = "./dtw-weight/fixcovid19.r")
+#source(file = "./dtw-weight/fixcovid19.r")
+library(dtwweight)
 set.seed('123')
 
 # variable
