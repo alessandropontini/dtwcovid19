@@ -31,4 +31,4 @@ Per installarlo bisogna avere installato R e l'IDE R-studio. Una volta completat
 A questo punto siamo pronti per usare il pacchetto andando direttamente nel file R *main.R* ed eseguirlo nella sua totalità.
 
 ## Ringraziamenti
-da fare
+Ringrazio tutta Sdg per l'aiuto e per la disponibilità. 
